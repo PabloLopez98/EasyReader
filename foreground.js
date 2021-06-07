@@ -1,4 +1,4 @@
-let theColor = "red";
+let theColor = "blue";
 let enableChangeBackgroundColor = false;
 let enableFocus = false;
 

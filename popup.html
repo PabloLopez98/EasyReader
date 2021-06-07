@@ -4,15 +4,51 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+    />
     <title>Document</title>
   </head>
   <body>
-    <input id="colorInput" placeholder="blue" />
-    <button id="setColorButton">Set Color</button><br /><br />
-    <button id="changeBackgroundColorButton">Change Background Color</button
-    ><br /><br />
-    <button id="focusTextButton">Focus Text</button><br /><br />
-    <button id="highlightTextButton">Highlight Text</button>
+    <div class="container" style="padding: 10px">
+      <div class="field">
+        <label class="label">Set a Color</label>
+        <div class="control">
+          <input
+            class="input is-small"
+            id="colorInput"
+            placeholder="blue"
+            style="width: 100px"
+          />
+          <button class="button is-primary is-small" id="setColorButton">
+            Set Color
+          </button>
+        </div>
+      </div>
+
+      <button
+        class="button is-info is-small"
+        style="margin-top: 2px"
+        id="changeBackgroundColorButton"
+      >
+        Change Background
+      </button>
+      <button
+        class="button is-danger is-small"
+        style="margin-top: 2px"
+        id="focusTextButton"
+      >
+        Focus
+      </button>
+      <button
+        class="button is-warning is-small"
+        style="margin-top: 2px"
+        id="highlightTextButton"
+      >
+        Highlight
+      </button>
+    </div>
     <script src="popup.js"></script>
   </body>
 </html>
