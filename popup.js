@@ -1,7 +1,10 @@
 var input = document.getElementById("colorInput");
 var setColorButton = document.getElementById("setColorButton");
-var changeColorButton = document.getElementById("changeColorButton");
-var hideContentButton = document.getElementById("hideContentButton");
+var changeBackgroundColorButton = document.getElementById(
+  "changeBackgroundColorButton"
+);
+var focusTextButton = document.getElementById("focusTextButton");
+var highlightTextButton = document.getElementById("highlightTextButton");
 
 setColorButton.addEventListener("click", function () {
   chrome.runtime.sendMessage({
@@ -10,16 +13,23 @@ setColorButton.addEventListener("click", function () {
   });
 });
 
-changeColorButton.addEventListener("click", function () {
+changeBackgroundColorButton.addEventListener("click", function () {
   chrome.runtime.sendMessage({
-    message: "changeColorButton",
+    message: "changeBackgroundColorButton",
     payload: null,
   });
 });
 
-hideContentButton.addEventListener("click", function () {
+focusTextButton.addEventListener("click", function () {
   chrome.runtime.sendMessage({
-    message: "hideContentButton",
+    message: "focusTextButton",
+    payload: null,
+  });
+});
+
+highlightTextButton.addEventListener("click", function () {
+  chrome.runtime.sendMessage({
+    message: "highlightTextButton",
     payload: null,
   });
 });
