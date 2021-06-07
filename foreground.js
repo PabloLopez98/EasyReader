@@ -1,6 +1,5 @@
 let theColor = "red";
 let enableChangeBackgroundColor = false;
-let enableHighlightText = false;
 let enableFocus = false;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -18,8 +17,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     focus();
   } else if (request.message === "highlightTextButton") {
     console.log("INSIDE FOREGROUND.JS, highlightTextButton");
-    if (enableHighlightText) enableHighlightText = false;
-    else enableHighlightText = true;
+    getText();
   }
 });
 
@@ -28,7 +26,6 @@ document.addEventListener(
   function (e) {
     e = e || window.event;
     var target = e.target;
-    console.log(target);
     if (enableChangeBackgroundColor) target.style.backgroundColor = theColor;
   },
   false
@@ -37,12 +34,21 @@ document.addEventListener(
 function focus() {
   if (enableFocus) {
     document.body.style.visibility = "hidden";
-    //target.style.visibility = "visible";
     let arr = document.getElementsByTagName("P");
     for (let i = 0; i < arr.length; i++) {
       arr[i].style.visibility = "visible";
     }
   } else {
     document.body.style.visibility = "visible";
+  }
+}
+
+function getText() {
+  if (window.getSelection) {
+    var selection = window.getSelection();
+    var range = selection.getRangeAt(0);
+    var newNode = document.createElement("span");
+    newNode.setAttribute("style", `background-color: ${theColor};`);
+    range.surroundContents(newNode);
   }
 }
