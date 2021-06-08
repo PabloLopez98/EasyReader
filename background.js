@@ -15,7 +15,14 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+var buttonLogicData = {
+  changeBackgroundColorButton: false,
+  focusTextButton: false,
+};
+
+chrome.storage.local.set({ buttonLogic: buttonLogicData });
+
+/* chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
     const tabId = tabArray[0].id;
     chrome.tabs.sendMessage(tabId, {
@@ -23,7 +30,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       payload: request.payload,
     });
   });
-});
+}); */
 
 /* chrome.tabs.query(
   { currentWindow: true, active: true },

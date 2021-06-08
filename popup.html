@@ -19,7 +19,7 @@
             class="input is-small"
             id="colorInput"
             placeholder="blue"
-            style="width: 100px"
+            style="width: 200px"
           />
           <button class="button is-primary is-small" id="setColorButton">
             Set Color
@@ -27,27 +27,37 @@
         </div>
       </div>
 
-      <button
-        class="button is-info is-small"
-        style="margin-top: 2px"
-        id="changeBackgroundColorButton"
-      >
-        Change Background
-      </button>
-      <button
-        class="button is-danger is-small"
-        style="margin-top: 2px"
-        id="focusTextButton"
-      >
-        Focus
-      </button>
-      <button
-        class="button is-warning is-small"
-        style="margin-top: 2px"
-        id="highlightTextButton"
-      >
-        Highlight
-      </button>
+      <div class="field">
+        <button
+          class="button is-info is-small"
+          style="margin-top: 2px; width: 200px"
+          id="changeBackgroundColorButton"
+        >
+          Change Background
+        </button>
+        <span id="cb">false</span>
+      </div>
+
+      <div class="field">
+        <button
+          class="button is-danger is-small"
+          style="margin-top: 2px; width: 200px"
+          id="focusTextButton"
+        >
+          Focus
+        </button>
+        <span id="ft">false</span>
+      </div>
+
+      <div class="field">
+        <button
+          class="button is-warning is-small"
+          style="margin-top: 2px; width: 200px"
+          id="highlightTextButton"
+        >
+          Highlight
+        </button>
+      </div>
     </div>
     <script src="popup.js"></script>
   </body>

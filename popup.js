@@ -6,30 +6,64 @@ var changeBackgroundColorButton = document.getElementById(
 var focusTextButton = document.getElementById("focusTextButton");
 var highlightTextButton = document.getElementById("highlightTextButton");
 
+var cb = document.getElementById("cb");
+var ft = document.getElementById("ft");
+
+let buttonLogicData = {};
+
+document.addEventListener("DOMContentLoaded", function (e) {
+  chrome.storage.local.get("buttonLogic", function (data) {
+    buttonLogicData = data.buttonLogic;
+    cb.innerHTML = data.buttonLogic.changeBackgroundColorButton.toString();
+    ft.innerHTML = data.buttonLogic.focusTextButton.toString();
+  });
+});
+
 setColorButton.addEventListener("click", function () {
-  chrome.runtime.sendMessage({
-    message: "setColorButton",
-    payload: input.value,
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+    const tabId = tabArray[0].id;
+    chrome.tabs.sendMessage(tabId, {
+      message: "setColorButton",
+      payload: input.value,
+    });
   });
 });
 
 changeBackgroundColorButton.addEventListener("click", function () {
-  chrome.runtime.sendMessage({
-    message: "changeBackgroundColorButton",
-    payload: null,
+  buttonLogicData.changeBackgroundColorButton =
+    !buttonLogicData.changeBackgroundColorButton;
+  cb.innerHTML = buttonLogicData.changeBackgroundColorButton;
+  chrome.storage.local.set({ buttonLogic: buttonLogicData });
+  //
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+    const tabId = tabArray[0].id;
+    chrome.tabs.sendMessage(tabId, {
+      message: "changeBackgroundColorButton",
+      payload: null,
+    });
   });
 });
 
 focusTextButton.addEventListener("click", function () {
-  chrome.runtime.sendMessage({
-    message: "focusTextButton",
-    payload: null,
+  buttonLogicData.focusTextButton = !buttonLogicData.focusTextButton;
+  ft.innerHTML = buttonLogicData.focusTextButton;
+  chrome.storage.local.set({ buttonLogic: buttonLogicData });
+  //
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+    const tabId = tabArray[0].id;
+    chrome.tabs.sendMessage(tabId, {
+      message: "focusTextButton",
+      payload: null,
+    });
   });
 });
 
 highlightTextButton.addEventListener("click", function () {
-  chrome.runtime.sendMessage({
-    message: "highlightTextButton",
-    payload: null,
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+    const tabId = tabArray[0].id;
+    chrome.tabs.sendMessage(tabId, {
+      message: "highlightTextButton",
+      payload: null,
+    });
   });
 });
