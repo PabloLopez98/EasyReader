@@ -22,30 +22,55 @@ var buttonLogicData = {
 
 chrome.storage.local.set({ buttonLogic: buttonLogicData });
 
-/* chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
-    const tabId = tabArray[0].id;
-    chrome.tabs.sendMessage(tabId, {
-      message: request.message,
-      payload: request.payload,
+var db = null;
+
+try {
+  self.importScripts("firebase/app.js", "firebase/realtimedatabase.js");
+  firebaseConfig = {};
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.database();
+} catch (error) {
+  console.log(error);
+}
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.message === "addNoteButton") {
+    var websiteTitle;
+    var googleEmail;
+    chrome.tabs.query(
+      { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+      function (tabs) {
+        websiteTitle = tabs[0].title.split(" ").join("");
+      }
+    );
+    chrome.identity.getProfileUserInfo((userInfo) => {
+      googleEmail = userInfo.email.toString().slice(0, -10);
+      db.ref("emails")
+        .child(googleEmail)
+        .child(websiteTitle)
+        .push()
+        .set(request.payload);
     });
-  });
-}); */
-
-/* chrome.tabs.query(
-  { currentWindow: true, active: true },
-  function (tabArray) {
-    const tabId = tabArray[0].id;
-    
+  } else if (request.message === "viewNotesButton") {
+    var currentTitle;
+    var currentEmail;
+    chrome.tabs.query(
+      { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+      function (tabs) {
+        currentTitle = tabs[0].title.split(" ").join("");
+      }
+    );
+    chrome.identity.getProfileUserInfo((userInfo) => {
+      currentEmail = userInfo.email.toString().slice(0, -10);
+      db.ref("emails")
+        .child(currentEmail)
+        .child(currentTitle)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            console.log(Object.values(snapshot.val()));
+          }
+        });
+    });
   }
-); */
-
-/* chrome.scripting
-.executeScript({
-  target: { tabId: tabId },
-  files: ["./foreground.js"],
-})
-.then(() => {
-  console.log("foreground.js injected successfully");
-})
-.catch((err) => console.log(err)); */
+});

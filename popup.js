@@ -6,6 +6,8 @@ var changeBackgroundColorButton = document.getElementById(
 var focusTextButton = document.getElementById("focusTextButton");
 var highlightTextButton = document.getElementById("highlightTextButton");
 var readTextButton = document.getElementById("readTextButton");
+var addNoteButton = document.getElementById("addNoteButton");
+var viewNotesButton = document.getElementById("viewNotesButton");
 
 var cb = document.getElementById("cb");
 var ft = document.getElementById("ft");
@@ -76,5 +78,25 @@ readTextButton.addEventListener("click", function () {
       message: "readTextButton",
       payload: null,
     });
+  });
+});
+
+addNoteButton.addEventListener("click", function () {
+  let inputElement = document.getElementById("input");
+  if (inputElement.value === "") {
+    alert("Empty Note");
+  } else {
+    chrome.runtime.sendMessage({
+      message: "addNoteButton",
+      payload: inputElement.value,
+    });
+    inputElement.value = "";
+  }
+});
+
+viewNotesButton.addEventListener("click", function () {
+  chrome.runtime.sendMessage({
+    message: "viewNotesButton",
+    payload: null,
   });
 });

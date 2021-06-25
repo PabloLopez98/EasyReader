@@ -20,6 +20,13 @@
       "128": "./images/get_started128.png"
     }
   },
-  "permissions": ["activeTab", "tabs", "storage", "scripting"],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "scripting",
+    "identity",
+    "identity.email"
+  ],
   "host_permissions": ["<all_urls>"]
 }
