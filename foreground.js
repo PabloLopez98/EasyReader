@@ -60,6 +60,7 @@ function readText() {
       myTimeout = setTimeout(myTimer, 10000);
       var textToRead = window.getSelection().toString();
       let utterThis = new SpeechSynthesisUtterance(textToRead);
+      utterThis.rate = 0.9;
       utterThis.onend = function () {
         clearTimeout(myTimeout);
       };
