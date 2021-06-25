@@ -18,6 +18,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   } else if (request.message === "highlightTextButton") {
     console.log("INSIDE FOREGROUND.JS, highlightTextButton");
     getText();
+  } else if (request.message === "readTextButton") {
+    console.log("INSIDE FOREGROUND.JS, readTextButton");
+    readText();
   }
 });
 
@@ -40,6 +43,32 @@ function focus() {
     }
   } else {
     document.body.style.visibility = "visible";
+  }
+}
+
+var myTimeout;
+function myTimer() {
+  window.speechSynthesis.pause();
+  window.speechSynthesis.resume();
+  myTimeout = setTimeout(myTimer, 10000);
+}
+
+function readText() {
+  try {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      myTimeout = setTimeout(myTimer, 10000);
+      var textToRead = window.getSelection().toString();
+      let utterThis = new SpeechSynthesisUtterance(textToRead);
+      utterThis.onend = function () {
+        clearTimeout(myTimeout);
+      };
+      window.speechSynthesis.speak(utterThis);
+    } else {
+      alert("not supported");
+    }
+  } catch (e) {
+    console.log(e);
   }
 }
 

@@ -5,6 +5,7 @@ var changeBackgroundColorButton = document.getElementById(
 );
 var focusTextButton = document.getElementById("focusTextButton");
 var highlightTextButton = document.getElementById("highlightTextButton");
+var readTextButton = document.getElementById("readTextButton");
 
 var cb = document.getElementById("cb");
 var ft = document.getElementById("ft");
@@ -63,6 +64,16 @@ highlightTextButton.addEventListener("click", function () {
     const tabId = tabArray[0].id;
     chrome.tabs.sendMessage(tabId, {
       message: "highlightTextButton",
+      payload: null,
+    });
+  });
+});
+
+readTextButton.addEventListener("click", function () {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+    const tabId = tabArray[0].id;
+    chrome.tabs.sendMessage(tabId, {
+      message: "readTextButton",
       payload: null,
     });
   });
