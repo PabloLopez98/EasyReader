@@ -26,7 +26,14 @@ var db = null;
 
 try {
   self.importScripts("firebase/app.js", "firebase/realtimedatabase.js");
-  firebaseConfig = {};
+  firebaseConfig = {
+    apiKey: "AIzaSyBRtskJFLp0HSN-dwqR9gv8PiZm-1Ln2QA",
+    authDomain: "myextension-8f590.firebaseapp.com",
+    projectId: "myextension-8f590",
+    storageBucket: "myextension-8f590.appspot.com",
+    messagingSenderId: "443730221157",
+    appId: "1:443730221157:web:3effdf2284dcb8236b0e8c",
+  };
   firebase.initializeApp(firebaseConfig);
   db = firebase.database();
 } catch (error) {
@@ -68,9 +75,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         .get()
         .then((snapshot) => {
           if (snapshot.exists()) {
-            console.log(Object.values(snapshot.val()));
+            const arr = Object.values(snapshot.val());
+            sendMessageToForeground(arr);
           }
         });
     });
   }
 });
+
+function sendMessageToForeground(arr) {
+  chrome.tabs.query({ currentWindow: true, active: true }, function (tabArray) {
+    const tabId = tabArray[0].id;
+    chrome.tabs.sendMessage(tabId, {
+      message: "displayNotes",
+      payload: arr,
+    });
+  });
+}

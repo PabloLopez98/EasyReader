@@ -21,6 +21,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   } else if (request.message === "readTextButton") {
     console.log("INSIDE FOREGROUND.JS, readTextButton");
     readText();
+  } else if (request.message === "displayNotes") {
+    console.log("display notes case: ", request.payload);
+    let parentDiv = document.createElement("div");
+    parentDiv.id = "parentDivNotes";
+    var ul = document.createElement("ul");
+    parentDiv.appendChild(ul);
+    request.payload.forEach(function (note) {
+      var li = document.createElement("li");
+      li.style.margin = "10px";
+      li.style.fontSize = "18px";
+      ul.appendChild(li);
+      li.innerHTML = li.innerHTML + note;
+    });
+    parentDiv.style.zIndex = 10;
+    parentDiv.style.position = "fixed";
+    parentDiv.style.left = 0;
+    parentDiv.style.top = 0;
+    parentDiv.style.padding = "10px";
+    parentDiv.style.height = "100%";
+    parentDiv.style.background = "white";
+    parentDiv.style.visibility = "visible";
+    document.body.append(parentDiv);
   }
 });
 
@@ -41,8 +63,10 @@ function focus() {
     for (let i = 0; i < arr.length; i++) {
       arr[i].style.visibility = "visible";
     }
+    document.getElementById("parentDivNotes").style.visibility = "hidden";
   } else {
     document.body.style.visibility = "visible";
+    document.getElementById("parentDivNotes").style.visibility = "visible";
   }
 }
 
