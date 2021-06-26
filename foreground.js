@@ -22,17 +22,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log("INSIDE FOREGROUND.JS, readTextButton");
     readText();
   } else if (request.message === "displayNotes") {
-    console.log("display notes case: ", request.payload);
     let parentDiv = document.createElement("div");
     parentDiv.id = "parentDivNotes";
     var ul = document.createElement("ul");
     parentDiv.appendChild(ul);
-    request.payload.forEach(function (note) {
+    console.log(request.payload);
+    Object.keys(request.payload).forEach(function (key) {
       var li = document.createElement("li");
       li.style.margin = "10px";
       li.style.fontSize = "18px";
+      li.id = key;
+      li.addEventListener("click", function (e) {
+        e.preventDefault();
+        deleteNote(e.target.id);
+      });
       ul.appendChild(li);
-      li.innerHTML = li.innerHTML + note;
+      li.innerHTML = li.innerHTML + request.payload[key];
     });
     parentDiv.style.zIndex = 10;
     parentDiv.style.position = "fixed";
@@ -42,9 +47,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     parentDiv.style.height = "100%";
     parentDiv.style.background = "white";
     parentDiv.style.visibility = "visible";
+    let closeButtonElement = document.createElement("div");
+    closeButtonElement.innerHTML = "Close Notes";
+    closeButtonElement.style.margin = "2px";
+    closeButtonElement.style.textAlign = "center";
+    closeButtonElement.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log("closing");
+      parentDiv.style.visibility = "hidden";
+    });
+    parentDiv.appendChild(closeButtonElement);
     document.body.append(parentDiv);
   }
 });
+
+function deleteNote(id) {
+  document.getElementById(id).remove();
+  chrome.runtime.sendMessage({
+    message: "deleteNote",
+    payload: id,
+  });
+}
 
 document.addEventListener(
   "click",

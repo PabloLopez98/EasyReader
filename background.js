@@ -39,6 +39,7 @@ try {
 } catch (error) {
   console.log(error);
 }
+var arr;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message === "addNoteButton") {
@@ -75,10 +76,40 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         .get()
         .then((snapshot) => {
           if (snapshot.exists()) {
-            const arr = Object.values(snapshot.val());
+            arr = snapshot.val();
             sendMessageToForeground(arr);
           }
         });
+    });
+  } else if (request.message === "shareNotesButton") {
+    var otherTitle;
+    var otherEmail;
+    chrome.tabs.query(
+      { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+      function (tabs) {
+        otherTitle = tabs[0].title.split(" ").join("");
+        otherEmail = request.payload.toString().slice(0, -10);
+        arr.forEach(function (note) {
+          db.ref("emails").child(otherEmail).child(otherTitle).push().set(note);
+        });
+      }
+    );
+  } else if (request.message === "deleteNote") {
+    var titleAgain;
+    var emailAgain;
+    chrome.tabs.query(
+      { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+      function (tabs) {
+        titleAgain = tabs[0].title.split(" ").join("");
+      }
+    );
+    chrome.identity.getProfileUserInfo((userInfo) => {
+      emailAgain = userInfo.email.toString().slice(0, -10);
+      db.ref("emails")
+        .child(emailAgain)
+        .child(titleAgain)
+        .child(request.payload)
+        .remove();
     });
   }
 });

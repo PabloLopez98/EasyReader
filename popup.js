@@ -8,6 +8,7 @@ var highlightTextButton = document.getElementById("highlightTextButton");
 var readTextButton = document.getElementById("readTextButton");
 var addNoteButton = document.getElementById("addNoteButton");
 var viewNotesButton = document.getElementById("viewNotesButton");
+var shareNotesButton = document.getElementById("shareNotesButton");
 
 var cb = document.getElementById("cb");
 var ft = document.getElementById("ft");
@@ -99,4 +100,17 @@ viewNotesButton.addEventListener("click", function () {
     message: "viewNotesButton",
     payload: null,
   });
+});
+
+shareNotesButton.addEventListener("click", function () {
+  let inputEmailElement = document.getElementById("emailInput");
+  if (inputEmailElement.value === "") {
+    alert("Empty Email");
+  } else {
+    chrome.runtime.sendMessage({
+      message: "shareNotesButton",
+      payload: inputEmailElement.value,
+    });
+    inputEmailElement.value = "";
+  }
 });
