@@ -39,6 +39,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       ul.appendChild(li);
       li.innerHTML = li.innerHTML + request.payload[key];
     });
+    parentDiv.style.resize = "horizontal";
+    parentDiv.style.overflow = "auto";
     parentDiv.style.zIndex = 10;
     parentDiv.style.position = "fixed";
     parentDiv.style.left = 0;
