@@ -2,7 +2,7 @@
 
 ## Easy Reader
 
-!['Easy Reader'](https://github.com/GracefullyHotter/GracefullyHotter/blob/main/public/gracefullyhotterscreenshot.png)
+!['Easy Reader'](https://github.com/PabloLopez98/EasyReader/blob/main/images/easyreaderscreenshot.png)
 
 Demo: link goes here
 
