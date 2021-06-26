@@ -4,7 +4,7 @@
 
 !['Easy Reader'](https://github.com/PabloLopez98/EasyReader/blob/main/images/easyreaderscreenshot.png)
 
-Demo: https://youtu.be/BdHQk0q3ml4
+Youtube Video: https://youtu.be/BdHQk0q3ml4
 
 Easy Reader is a productivity tool for studying that resulted out of a 3 day hackathon in which I tasked myself to learn how to build a chrome extension, as well as how to use the realtime database (Firebase). This project contains the following features:
 
