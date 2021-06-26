@@ -1,7 +1,5 @@
 # Gracefully Hotter
 
-## Easy Reader
-
 !['Easy Reader'](https://github.com/PabloLopez98/EasyReader/blob/main/images/easyreaderscreenshot.png)
 
 Youtube Video: https://youtu.be/BdHQk0q3ml4
