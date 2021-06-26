@@ -27,12 +27,7 @@ var db = null;
 try {
   self.importScripts("firebase/app.js", "firebase/realtimedatabase.js");
   firebaseConfig = {
-    apiKey: "AIzaSyBRtskJFLp0HSN-dwqR9gv8PiZm-1Ln2QA",
-    authDomain: "myextension-8f590.firebaseapp.com",
-    projectId: "myextension-8f590",
-    storageBucket: "myextension-8f590.appspot.com",
-    messagingSenderId: "443730221157",
-    appId: "1:443730221157:web:3effdf2284dcb8236b0e8c",
+    /* Your firebase config goes here */
   };
   firebase.initializeApp(firebaseConfig);
   db = firebase.database();
